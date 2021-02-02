@@ -1,3 +1,11 @@
+CREATE TABLE milestone (
+  id SERIAL PRIMARY KEY,
+  title VARCHAR (64) NOT NULL,
+  description VARCHAR (256),
+  status VARCHAR (64) NOT NULL,
+  completed_date TIMESTAMP
+);
+
 CREATE TABLE user_ (
   id SERIAL PRIMARY KEY,
   username VARCHAR (32) NOT NULL UNIQUE,

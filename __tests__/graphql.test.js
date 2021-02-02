@@ -20,7 +20,7 @@ describe('data tests', () => {
   const server = app.listen(process.env.PORT);
   const request = supertest(app);
 
-  it('fetch data', async () => {
+  it('fetch milestones', async () => {
     expect.assertions(2);
 
     db.query.mockResolvedValueOnce({ rows: [{ id: 1 }] });
@@ -28,13 +28,13 @@ describe('data tests', () => {
     const response = await request
       .post('/graphql')
       .send({
-        query: '{ data { id, } }',
+        query: '{ milestones { id , title } }',
       })
       .set('Accept', 'application/json')
       .expect('Content-Type', /json/)
       .expect(200);
     expect(response.body).toBeInstanceOf(Object);
-    expect(response.body.data.data).toHaveProperty('id', 1);
+    expect(response.body.data.milestones).toHaveLength(1);
     resetMocks();
   });
 

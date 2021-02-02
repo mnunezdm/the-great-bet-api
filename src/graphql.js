@@ -1,27 +1,15 @@
-const { GraphQLObjectType, GraphQLSchema, GraphQLInt } = require('graphql');
+const { GraphQLObjectType, GraphQLSchema, GraphQLList } = require('graphql');
 
 const joinMonster = require('join-monster');
+
+const { MilestoneSchema } = require('./models/milestone');
 
 const query = db =>
   new GraphQLObjectType({
     name: 'Query',
     fields: () => ({
-      data: {
-        type: new GraphQLObjectType({
-          name: 'data',
-          extensions: {
-            joinMonster: {
-              sqlTable: 'data',
-              uniqueKey: 'id',
-            },
-          },
-          fields: () => ({
-            id: {
-              type: GraphQLInt,
-              description: 'Id of the data',
-            },
-          }),
-        }),
+      milestones: {
+        type: new GraphQLList(MilestoneSchema),
         resolve: (parent, args, context, resolveInfo) =>
           joinMonster.default(resolveInfo, {}, sql => db.query(sql), {
             dialect: 'pg',

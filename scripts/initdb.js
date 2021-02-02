@@ -5,7 +5,7 @@ const chalk = require('chalk');
 const yargs = require('yargs');
 
 const { getDbConfig, buildDbUri } = require('../src/config');
-const { BaseObject } = require('../src/models/dbs/base');
+const { Milestone } = require('../src/models/milestone');
 
 const argv = yargs
   .option('wipe', {
@@ -54,7 +54,7 @@ if (argv.wipe) {
   console.log(chalk`{yellow [INFO]} Truncating db`);
 
   client.querySync(
-    `TRUNCATE TABLE ${BaseObject.TABLE} RESTART IDENTITY CASCADE;`,
+    `TRUNCATE TABLE ${Milestone.TABLE} RESTART IDENTITY CASCADE;`,
   );
 }
 
@@ -64,14 +64,13 @@ if (argv.dataFile) {
     .pipe(
       csvParser({
         separator: ',',
-        mapValues: BaseObject.getValue,
+        mapValues: Milestone.getValue,
       }),
     )
     .on('data', row => {
-      data.push(BaseObject.fromCsvRow(row));
+      data.push(Milestone.fromCsvRow(row));
     })
     .on('end', () => {
-      console.log(data[0].toRow());
       try {
         data.forEach(item => {
           try {

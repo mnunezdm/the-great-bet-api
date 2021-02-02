@@ -1,5 +1,5 @@
 [*]
 trim_trailing_whitespace = true
 
-[*.js]
+[*.{js,json}]
 indent_size = 2
