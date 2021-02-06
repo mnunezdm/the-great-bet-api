@@ -2,7 +2,7 @@ const { GraphQLObjectType, GraphQLSchema, GraphQLList } = require('graphql');
 
 const joinMonster = require('join-monster');
 
-const { MilestoneSchema } = require('./models/milestone');
+const { MilestoneSchema } = require('../models/milestone');
 
 const query = db =>
   new GraphQLObjectType({

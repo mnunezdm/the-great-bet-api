@@ -4,6 +4,7 @@ const {
   GraphQLEnumType,
   GraphQLInt,
 } = require('graphql');
+const { GraphQLTimestamp } = require('../graphql/types/timestamp');
 const { BaseObject } = require('./dbs/base');
 
 const StatusSchema = new GraphQLEnumType({
@@ -44,7 +45,7 @@ const MilestoneSchema = new GraphQLObjectType({
       description: 'Current status for the milestone',
     },
     completedDate: {
-      type: GraphQLInt,
+      type: GraphQLTimestamp,
       description: 'Completion date for the current milestone in epoch format',
       extensions: {
         joinMonster: {
