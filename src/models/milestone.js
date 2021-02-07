@@ -88,15 +88,20 @@ class Milestone extends BaseObject {
         type: String,
         insertable: true,
         serializable: true,
+        picklistValues: {
+          notstarted: 'notstarted',
+          inprogress: 'inprogress',
+          completed: 'completed',
+        },
       },
       completedDate: {
-        type: Number,
+        type: Date,
         sqlField: 'completed_date',
         insertable: true,
         serializable: true,
       },
       startedDate: {
-        type: Number,
+        type: Date,
         sqlField: 'started_date',
         insertable: true,
         serializable: true,
