@@ -1,3 +1,4 @@
+const chalk = require('chalk');
 const {
   GraphQLString,
   GraphQLObjectType,
@@ -161,6 +162,46 @@ class Milestone extends BaseObject {
     this._starteddDate = starteddDate;
   }
 
+  async updateStatus(db, newStatus) {
+    console.log(
+      chalk.dim`[info] Chaning milestone with id ${this.id} and status ${this.status} to ${newStatus}`,
+    );
+
+    if (!Milestone.fields.status.picklistValues[newStatus]) {
+      throw new InvalidStatusError(`Invalid status value '${newStatus}'`);
+    }
+
+    if (this.status === newStatus) {
+      throw new InvalidStatusError('Trying to change to actual status');
+    }
+
+    if (
+      newStatus === 'notstarted' ||
+      (this.status === 'completed' && newStatus === 'inprogress')
+    ) {
+      throw new InvalidStatusError('Cannot go back to previous status');
+    }
+
+    if (newStatus === 'completed' && this.status !== 'inprogress') {
+      throw new InvalidStatusError('You have to start before complete');
+    }
+
+    if (this.id > 0) {
+      const previousMilestone = await this.constructor.fromId(db, this.id - 1);
+
+      if (previousMilestone.status !== 'completed') {
+        throw new InvalidStatusError('You have to finish previous milestone');
+      }
+    }
+
+    this.status = newStatus;
+    const timestampField =
+      newStatus === 'inprogress' ? 'startedDate' : 'completedDate';
+    this[timestampField] = new Date();
+
+    await this.update(db, ['status', timestampField]);
+  }
+
   /**
    * @returns {Milestone}
    */
@@ -170,6 +211,8 @@ class Milestone extends BaseObject {
     return milestone;
   }
 }
+
+class InvalidStatusError extends Error {}
 
 module.exports = {
   MilestoneSchema,
