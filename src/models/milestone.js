@@ -217,4 +217,5 @@ class InvalidStatusError extends Error {}
 module.exports = {
   MilestoneSchema,
   Milestone,
+  StatusSchema,
 };
