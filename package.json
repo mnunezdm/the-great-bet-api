@@ -9,6 +9,9 @@
     "lint": "eslint --ignore-path .gitignore .",
     "init-db": "node scripts/initdb.js -w"
   },
+  "engines": {
+    "node": ">=12.0.0"
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
