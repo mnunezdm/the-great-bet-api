@@ -1,10 +1,10 @@
-"title","description","status","completedDate"
-"Pagar",,"completed",
-"El sistema financiero",,"completed",
-"Análisis técnico",,"inprogress",
-"Tipos de inversores",,"notstarted",
-"Análisis fundamental y macroeconómico",,"notstarted",
-"Gestión monetaria",,"notstarted",
-"Gestión del riesgo",,"notstarted",
-"Consideraciones finales",,"notstarted",
-"Proyecto",,"notstarted",
+"title","description","status","startedDate","completedDate"
+"Pagar",,"completed",,"2021-01-28T00:00:00.000Z"
+"El sistema financiero",,"inprogress","2021-02-04T00:20:00.000Z",
+"Análisis técnico",,"notstarted",,
+"Tipos de inversores",,"notstarted",,
+"Análisis fundamental y macroeconómico",,"notstarted",,
+"Gestión monetaria",,"notstarted",,
+"Gestión del riesgo",,"notstarted",,
+"Consideraciones finales",,"notstarted",,
+"Proyecto",,"notstarted",,
