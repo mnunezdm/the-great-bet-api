@@ -35,21 +35,30 @@ const MilestoneSchema = new GraphQLObjectType({
       type: GraphQLInt,
       description: 'Id of the milestone',
     },
-    title: { type: GraphQLString, description: 'Title for the milestone' },
+    title: { type: GraphQLString, description: 'Milestone title' },
     description: {
       type: GraphQLString,
-      description: 'Description for the milestone',
+      description: 'Milestone description',
     },
     status: {
       type: StatusSchema,
-      description: 'Current status for the milestone',
+      description: 'Milestone status',
     },
     completedDate: {
       type: GraphQLTimestamp,
-      description: 'Completion date for the current milestone in epoch format',
+      description: 'Completion date of the milestone in epoch format',
       extensions: {
         joinMonster: {
           sqlColumn: 'completed_date',
+        },
+      },
+    },
+    startedDate: {
+      type: GraphQLTimestamp,
+      description: 'Started date of the milestone in epoch format',
+      extensions: {
+        joinMonster: {
+          sqlColumn: 'started_date',
         },
       },
     },
@@ -83,6 +92,12 @@ class Milestone extends BaseObject {
       completedDate: {
         type: Number,
         sqlField: 'completed_date',
+        insertable: true,
+        serializable: true,
+      },
+      startedDate: {
+        type: Number,
+        sqlField: 'started_date',
         insertable: true,
         serializable: true,
       },
@@ -132,6 +147,13 @@ class Milestone extends BaseObject {
   }
   set completedDate(completedDate) {
     this._completedDate = completedDate;
+  }
+
+  get starteddDate() {
+    return this._starteddDate;
+  }
+  set starteddDate(starteddDate) {
+    this._starteddDate = starteddDate;
   }
 
   /**

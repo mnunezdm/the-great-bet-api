@@ -3,6 +3,7 @@ CREATE TABLE milestone (
   title VARCHAR (64) NOT NULL,
   description VARCHAR (256),
   status VARCHAR (64) NOT NULL,
+  started_date TIMESTAMP,
   completed_date TIMESTAMP
 );
 
