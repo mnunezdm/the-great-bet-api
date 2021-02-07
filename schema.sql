@@ -1,8 +1,10 @@
+CREATE TYPE status AS ENUM ('notstarted', 'inprogress', 'completed');
+
 CREATE TABLE milestone (
   id SERIAL PRIMARY KEY,
   title VARCHAR (64) NOT NULL,
   description VARCHAR (256),
-  status VARCHAR (64) NOT NULL,
+  status status NOT NULL,
   started_date TIMESTAMP,
   completed_date TIMESTAMP
 );
