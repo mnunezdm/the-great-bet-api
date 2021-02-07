@@ -38,6 +38,12 @@ const schema = db =>
             status: { type: GraphQLNonNull(StatusSchema) },
           },
           resolve: async (parent, args, context, resolveInfo) => {
+            if (!context.user) {
+              throw new MissingAuthenticationError(
+                'Need to be logged to perform mutations',
+              );
+            }
+
             await (await Milestone.fromId(db, args.id)).updateStatus(
               db,
               args.status,
@@ -56,6 +62,8 @@ const schema = db =>
       }),
     }),
   });
+
+class MissingAuthenticationError extends Error {}
 
 module.exports = {
   schema,
