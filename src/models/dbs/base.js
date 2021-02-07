@@ -107,6 +107,29 @@ class BaseObject {
       key => (this[sqlFieldsMapper[key]] = payload[key]),
     );
   }
+
+  getDbValue(field) {
+    let value;
+
+    if (this.constructor.fields[field].type === Date) {
+      value = `'${this[field].toISOString()}'`;
+    } else if (this.constructor.fields[field].type === String) {
+      value = `'${this[field]}'`;
+    }
+    return value;
+  }
+
+  async update(db, fields) {
+    await db.query(
+      `UPDATE ${this.constructor.TABLE} SET ${fields
+        .map(
+          field =>
+            `${this.constructor.fields[field].sqlField ||
+              field} = ${this.getDbValue(field)}`,
+        )
+        .join(', ')} WHERE id = ${this.id}`,
+    );
+  }
 }
 
 class ResourceNotFoundError extends Error {}
